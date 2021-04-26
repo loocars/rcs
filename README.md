@@ -1,5 +1,5 @@
 # rcs
 
 Create symlink to the rcs:
-* `ln -s ~/git/.vimrc ~/.vimrc`
-* `ln -s ~/git/.bashrc ~/.bashrc`
+* `ln ~/git/.vimrc ~/.vimrc`
+* `ln ~/git/.bashrc ~/.bashrc`
