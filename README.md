@@ -11,6 +11,6 @@ To install Vundle:
 * Run `:PluginInstall`
 
 To install hstr (Ubuntu):
-* sudo add-apt-repository ppa:ultradvorka/ppa
-* sudo apt-get update
-* sudo apt-get install hstr
+* `sudo add-apt-repository ppa:ultradvorka/ppa`
+* `sudo apt-get update`
+* `sudo apt-get install hstr`
