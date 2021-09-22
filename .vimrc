@@ -9,10 +9,10 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'flazz/vim-colorschemes'
 Plugin 'zivyangll/git-blame.vim'
 Plugin 'dense-analysis/ale'
 Plugin 'pacha/vem-tabline'
+Plugin 'vim-airline/vim-airline'
 
 " All of your Plugins must be added before the following line
 
@@ -31,6 +31,9 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 set fileencoding=utf8
+
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 colorscheme atom
 nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
@@ -185,12 +188,15 @@ map Y y$
 " next search
 nnoremap <C-L> :nohl<CR><C-L>
 
+let g:airline#extensions#tabline#enabled = 1
+let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
+let g:ale_fixer_aliases = {'jsx': ['css', 'javascript']}
 let g:ale_linters = {   'python': ['pylint', 'mypy'],
-\                       'sh': ['shellcheck']}
-let g:ale_python_mypy_executable = './mypy.sh'
-let g:ale_python_yapf_executable = '/home/lukasl/git/check_mk/.venv/bin/yapf'
+\                       'sh': ['shellcheck'],
+\                       'jsx': ['eslint']}
 let g:ale_fixers = {    '*': ['trim_whitespace'],
-\                       'python': ['yapf', 'trim_whitespace']}
+\                       'python': ['black', 'isort'],
+\                       'jsx': ['eslint', 'prettier']}
 let g:ale_fix_on_save = 1
 let g:ale_echo_cursor = 0
 "------------------------------------------------------------
