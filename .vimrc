@@ -13,6 +13,10 @@ Plugin 'zivyangll/git-blame.vim'
 Plugin 'dense-analysis/ale'
 Plugin 'pacha/vem-tabline'
 Plugin 'vim-airline/vim-airline'
+Plugin 'gmoe/vim-espresso'
+Plugin 'vim-python/python-syntax'
+Plugin 'scrooloose/syntastic'
+Plugin 'ycm-core/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 
@@ -35,7 +39,10 @@ set fileencoding=utf8
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-colorscheme atom
+set t_Co=256   " This is may or may not needed.
+
+set background=dark
+colorscheme espresso
 nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 set hidden
 nnoremap <C-N> :bnext<CR>
@@ -187,6 +194,17 @@ map Y y$
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
 nnoremap <C-L> :nohl<CR><C-L>
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:python_highlight_all = 1
 
 let g:airline#extensions#tabline#enabled = 1
 let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}

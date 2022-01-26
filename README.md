@@ -14,3 +14,8 @@ To install hstr (Ubuntu):
 * `sudo add-apt-repository ppa:ultradvorka/ppa`
 * `sudo apt-get update`
 * `sudo apt-get install hstr`
+
+To install YouCompleteMe:
+* `sudo aptitude install build-essential cmake3 python3-dev`
+* `cd ~/.vim/bundle/YouCompleteMe`
+* `python3 install.py --all`
