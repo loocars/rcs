@@ -149,6 +149,7 @@ fi
 
 
 export PATH=$PATH:~/git/zeug_cmk/bin/
+export PATH=$PATH:~/.local/bin/
 
 # HSTR configuration - add this to ~/.bashrc
 alias hh=hstr                    # hh to be alias for hstr
