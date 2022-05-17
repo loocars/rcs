@@ -42,7 +42,7 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 set t_Co=256   " This is may or may not needed.
 
 set background=dark
-colorscheme espresso
+"colorscheme espresso
 nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 set hidden
 nnoremap <C-N> :bnext<CR>
@@ -214,7 +214,8 @@ let g:ale_linters = {   'python': ['pylint', 'mypy'],
 \                       'jsx': ['eslint']}
 let g:ale_fixers = {    '*': ['trim_whitespace'],
 \                       'python': ['black', 'isort'],
-\                       'jsx': ['eslint', 'prettier']}
+\                       'jsx': ['eslint', 'prettier'],
+\                        'cpp': ['clang-format']}
 let g:ale_fix_on_save = 1
 let g:ale_echo_cursor = 0
 "------------------------------------------------------------

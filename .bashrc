@@ -150,6 +150,7 @@ fi
 
 export PATH=$PATH:~/git/zeug_cmk/bin/
 export PATH=$PATH:~/.local/bin/
+export PATH=$PATH:~/.cargo/bin
 
 # HSTR configuration - add this to ~/.bashrc
 alias hh=hstr                    # hh to be alias for hstr
@@ -164,6 +165,7 @@ export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
 if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
 # if this is interactive shell, then bind 'kill last command' to Ctrl-x k
 if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
+if [[ $- =~ .*i.* ]]; then bind '"\C-t": "\C-a ranger \C-j"'; fi
 
 eval "$(direnv hook bash)"
 show_virtual_env() {
@@ -174,3 +176,4 @@ show_virtual_env() {
 export -f show_virtual_env
 PS1='$(show_virtual_env)'$PS1
 export LD_LIBRARY_PATH=/usr/local/lib
+. "$HOME/.cargo/env"
