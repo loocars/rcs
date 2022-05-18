@@ -207,15 +207,14 @@ let g:syntastic_check_on_wq = 0
 let g:python_highlight_all = 1
 
 let g:airline#extensions#tabline#enabled = 1
-let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
-let g:ale_fixer_aliases = {'jsx': ['css', 'javascript']}
 let g:ale_linters = {   'python': ['pylint', 'mypy'],
 \                       'sh': ['shellcheck'],
-\                       'jsx': ['eslint']}
+\                       'javascript': ['eslint']}
 let g:ale_fixers = {    '*': ['trim_whitespace'],
 \                       'python': ['black', 'isort'],
-\                       'jsx': ['eslint', 'prettier'],
-\                        'cpp': ['clang-format']}
+\                       'javascript': ['eslint', 'prettier'],
+\                       'css': ['prettier'],
+\                       'cpp': ['clang-format']}
 let g:ale_fix_on_save = 1
 let g:ale_echo_cursor = 0
 "------------------------------------------------------------
