@@ -100,21 +100,22 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias prettier='~/git/check_mk/scripts/run-prettier -w "/home/lukasl/git/check_mk/web/htdocs/themes/**/*.scss" "/home/lukasl/git/check_mk/enterprise/web/htdocs/themes/**/*.scss" "/home/lukasl/git/check_mk/enterprise/web/htdocs/js/**/*.js"'
+alias prettier='~/git/check_mk/scripts/run-prettier -w "/home/lukasl/git/check_mk/web/htdocs/themes/**/*.scss" "/home/lukasl/git/check_mk/enterprise/web/htdocs/themes/**/*.scss" "/home/lukasl/git/check_mk/enterprise/web/htdocs/js/**/*.ts"'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias guicrawl='REUSE=1 ~/git/check_mk/scripts/run-pipenv run py.test -vv -T ~/git/check_mk/tests/gui_crawl/test_gui_crawl.py'
 alias initguicrawl='sudo ~/git/check_mk/scripts/run-pipenv run py.test -vv -T ~/git/check_mk/tests/gui_crawl/test_gui_crawl.py'
 alias inttest='_it() { REUSE=1 ~/git/check_mk/tests/scripts/run-integration-test.py ~/git/check_mk/tests/integration/"$1" -k "$2" -vv; }; _it'
-alias unittest='_ut() { ~/git/check_mk/scripts/run-pipenv run py.test -vv -T unit ~/git/check_mk/tests/unit -k "$1"; }; _ut'
-alias unittests='make -C ~/git/check_mk/tests test-unit'
+alias unittest='_ut() { scripts/run-pipenv run py.test -vv -T unit tests/unit/ -k "$1"; }; _ut'
+alias unittests='make -C tests/ test-unit'
 alias omd='sudo omd'
 alias first50files='git status | grep geändert | cut -d":" -f2 | cut -d" " -f8 | head -n50 | tr "\n" " "'
 alias reloadbashrc='. ~/.bashrc'
-alias gcm='git checkout master && git pull'
-alias gcb='git checkout 2.1.0 && git pull'
-alias gcs='git checkout 2.0.0 && git pull'
+alias gcm='cd ~/git/check_mk/ && git checkout master && git pull'
+alias gcb='cd ~/git/check_mk_2.2.0 && git checkout 2.2.0 && git pull'
+alias gcs='cd ~/git/check_mk_2.1.0 && git checkout 2.1.0 && git pull'
+alias gco='cd ~/git/check_mk_2.0.0 && git checkout 2.0.0 && git pull'
 alias lock='gnome-screensaver-command -l'
 alias ..='cd ..'
 alias checks='cd ~/git/check_mk/checks'
@@ -150,7 +151,7 @@ fi
 
 export PATH=$PATH:~/git/zeug_cmk/bin/
 export PATH=$PATH:~/.local/bin/
-export PATH=$PATH:~/.cargo/bin
+export PATH=$PATH:~/.cargo/bin/
 
 # HSTR configuration - add this to ~/.bashrc
 alias hh=hstr                    # hh to be alias for hstr
@@ -177,3 +178,11 @@ export -f show_virtual_env
 PS1='$(show_virtual_env)'$PS1
 export LD_LIBRARY_PATH=/usr/local/lib
 . "$HOME/.cargo/env"
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
