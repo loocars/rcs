@@ -4,6 +4,8 @@
 
 export EDITOR='vim'
 export VISUAL='vim'
+export VPN_CONNECT_TIMEOUT=8
+export VPN_CONNECT_USE_SECRET_TOOLS=true
 
 # If not running interactively, don't do anything
 case $- in
