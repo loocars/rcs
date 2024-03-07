@@ -102,7 +102,7 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias prettier='~/git/check_mk/scripts/run-prettier -w "/home/lukasl/git/check_mk/web/htdocs/themes/**/*.scss" "/home/lukasl/git/check_mk/enterprise/web/htdocs/themes/**/*.scss" "/home/lukasl/git/check_mk/enterprise/web/htdocs/js/**/*.ts"'
+alias prettier='~/git/check_mk/scripts/run-prettier -w "/home/lukaslengler/git/check_mk/web/htdocs/themes/**/*.scss" "/home/lukaslengler/git/check_mk/web/htdocs/js/**/*.ts"'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -182,9 +182,10 @@ export LD_LIBRARY_PATH=/usr/local/lib
 . "$HOME/.cargo/env"
 
 
-# Load Angular CLI autocompletion.
-source <(ng completion script)
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
