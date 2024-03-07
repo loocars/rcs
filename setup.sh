@@ -8,10 +8,12 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim -c "PluginInstall" -c "qa!"
 
 sudo add-apt-repository -y ppa:ultradvorka/ppa
+sudo add-apt-repository ppa:jonathonf/vim
 sudo apt-get update
 sudo aptitude install -y hstr
+sudo aptitude install -y vim-gtk
 
-sudo aptitude install -y build-essential cmake vim-nox python3-dev
+sudo aptitude install -y build-essential cmake python3-dev
 sudo aptitude install -y mono-complete golang nodejs default-jdk npm
 cd ~/.vim/bundle/YouCompleteMe
 python3 install.py --all
