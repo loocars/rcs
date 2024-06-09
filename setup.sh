@@ -11,10 +11,17 @@ sudo add-apt-repository -y ppa:ultradvorka/ppa
 sudo add-apt-repository ppa:jonathonf/vim
 sudo apt-get update
 sudo aptitude install -y hstr
-sudo aptitude install -y vim-gtk
+sudo aptitude install -y vim-gtk3
+sudo aptitude install -y curl
 
 sudo aptitude install -y build-essential cmake python3-dev
 sudo aptitude install -y mono-complete golang nodejs default-jdk npm
+
+curl https://pyenv.run | bash
+curl https://sh.rustup.rs -sSf | sh
+
+sudo aptitude install -y direnv
+
 cd ~/.vim/bundle/YouCompleteMe
 python3 install.py --all
 cd ~/git/rcs
