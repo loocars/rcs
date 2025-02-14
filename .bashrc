@@ -102,7 +102,6 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias prettier='~/git/check_mk/scripts/run-prettier -w "/home/lukaslengler/git/check_mk/web/htdocs/themes/**/*.scss" "/home/lukaslengler/git/check_mk/web/htdocs/js/**/*.ts"'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -156,6 +155,9 @@ export PATH=$PATH:~/git/zeug_cmk/bin/
 export PATH=$PATH:~/.local/bin/
 export PATH=$PATH:~/.cargo/bin/
 
+export GERRIT_USER=lukas.lengler
+export GERRIT_TOKEN=********************************
+
 # HSTR configuration - add this to ~/.bashrc
 alias hh=hstr                    # hh to be alias for hstr
 export HSTR_CONFIG=hicolor       # get more colors
@@ -165,11 +167,13 @@ export HISTFILESIZE=10000        # increase history file size (default is 500)
 export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
 # ensure synchronization between bash memory and history file
 export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
+function hstrnotiocsti {
+    { READLINE_LINE="$( { </dev/tty hstr ${READLINE_LINE}; } 2>&1 1>&3 3>&- )"; } 3>&1;
+    READLINE_POINT=${#READLINE_LINE}
+}
 # if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
-if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
-# if this is interactive shell, then bind 'kill last command' to Ctrl-x k
-if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
-if [[ $- =~ .*i.* ]]; then bind '"\C-t": "\C-a ranger \C-j"'; fi
+if [[ $- =~ .*i.* ]]; then bind -x '"\C-r": "hstrnotiocsti"'; fi
+export HSTR_TIOCSTI=n
 
 eval "$(direnv hook bash)"
 show_virtual_env() {
