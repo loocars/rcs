@@ -1,28 +1,44 @@
 # rcs
 
-Create symlink to the rcs:
-* `ln -s ~/git/rcs/.vimrc ~/.vimrc`
-* `rm ~/.bashrc`
-* `ln -s ~/git/rcs/.bashrc ~/.bashrc`
+Run `setup.sh` for a full automated install, or follow the steps below manually.
 
-To install Vundle:
-* `git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim`
-* Open vim
-* Run `:PluginInstall`
+## Symlinks
 
-To install hstr (Ubuntu):
-* `sudo add-apt-repository ppa:ultradvorka/ppa`
-* `sudo apt-get update`
-* `sudo aptitude install hstr`
+```bash
+rm -f ~/.vimrc && ln -s ~/git/rcs/.vimrc ~/.vimrc
+rm -f ~/.bashrc && ln -s ~/git/rcs/.bashrc ~/.bashrc
+mkdir -p ~/.config/nvim && ln -s ~/git/rcs/nvim/init.lua ~/.config/nvim/init.lua
+```
 
-To install YouCompleteMe:
-* `sudo aptitude install build-essential cmake vim-nox python3-dev`
-* `sudo aptitude install mono-complete golang nodejs default-jdk npm`
-* `cd ~/.vim/bundle/YouCompleteMe`
-* `python3 install.py --all`
+## Secrets
 
-To change Terminator theme:
-* Check the `TerminatorThemes` option under `terminator > preferences > plugins`
-* Open the terminator context menu and select `Themes`
-* Select theme
-* Open `~/.config/terminator/config` and replace `[[default]]` theme with the selected one
+`~/.bashrc.secrets` is sourced by `.bashrc` but not committed. Create it with:
+
+```bash
+echo "export GERRIT_TOKEN=<your_token>" >> ~/.bashrc.secrets
+chmod 600 ~/.bashrc.secrets
+```
+
+## vim
+
+vim-plug is bootstrapped automatically on first launch. YouCompleteMe is built via the plug `do` hook — if it fails, run manually:
+
+```bash
+sudo apt-get install -y build-essential cmake python3-dev
+~/.vim/plugged/YouCompleteMe/install.py
+```
+
+## Neovim
+
+lazy.nvim and all plugins install automatically on first launch. Requires pyright for Python LSP:
+
+```bash
+pip install pyright
+```
+
+## hstr
+
+```bash
+sudo add-apt-repository ppa:ultradvorka/ppa
+sudo apt-get update && sudo apt-get install -y hstr
+```
