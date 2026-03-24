@@ -74,7 +74,7 @@ nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 nnoremap <C-N> :bnext<CR>
 nnoremap <C-P> :bprev<CR>
 
-map Y y$
+nnoremap Y y$
 nnoremap <C-L> :nohl<CR><C-L>
 
 "------------------------------------------------------------

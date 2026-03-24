@@ -1,6 +1,6 @@
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git", "clone", "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
@@ -49,7 +49,7 @@ vim.opt.confirm      = true
 vim.opt.visualbell   = true
 vim.opt.mouse        = "a"
 
-vim.opt.syntax       = "on"
+vim.cmd("syntax on")
 vim.cmd("filetype plugin indent on")
 
 ------------------------------------------------------------
@@ -126,54 +126,60 @@ vim.g["airline#extensions#tabline#enabled"] = 1
 ------------------------------------------------------------
 -- LSP
 ------------------------------------------------------------
-local lspconfig = require("lspconfig")
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local ok_lsp, lspconfig = pcall(require, "lspconfig")
+local ok_cmp_lsp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 
--- Python: pyright for completions, go-to-def, hover
--- Install with: pip install pyright
-lspconfig.pyright.setup({ capabilities = capabilities })
+if ok_lsp then
+  local capabilities = ok_cmp_lsp and cmp_nvim_lsp.default_capabilities() or {}
 
--- Keymaps active only when an LSP is attached to the buffer
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(ev)
-    local opts = { buffer = ev.buf, silent = true }
-    vim.keymap.set("n", "gd",         vim.lsp.buf.definition,     opts)
-    vim.keymap.set("n", "K",          vim.lsp.buf.hover,          opts)
-    vim.keymap.set("n", "gi",         vim.lsp.buf.implementation, opts)
-    vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename,         opts)
-    vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action,    opts)
-    vim.keymap.set("n", "gr",         vim.lsp.buf.references,     opts)
-  end,
-})
+  -- Python: pyright for completions, go-to-def, hover
+  -- Install with: pip install pyright
+  lspconfig.pyright.setup({ capabilities = capabilities })
+
+  -- Keymaps active only when an LSP is attached to the buffer
+  vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(ev)
+      local opts = { buffer = ev.buf, silent = true }
+      vim.keymap.set("n", "gd",         vim.lsp.buf.definition,     opts)
+      vim.keymap.set("n", "K",          vim.lsp.buf.hover,          opts)
+      vim.keymap.set("n", "gi",         vim.lsp.buf.implementation, opts)
+      vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename,         opts)
+      vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action,    opts)
+      vim.keymap.set("n", "gr",         vim.lsp.buf.references,     opts)
+    end,
+  })
+end
 
 ------------------------------------------------------------
 -- Completion (nvim-cmp)
 ------------------------------------------------------------
-local cmp = require("cmp")
-local luasnip = require("luasnip")
+local ok_cmp, cmp = pcall(require, "cmp")
+local ok_snip, luasnip = pcall(require, "luasnip")
 
-cmp.setup({
-  snippet = {
-    expand = function(args) luasnip.lsp_expand(args.body) end,
-  },
-  mapping = cmp.mapping.preset.insert({
-    ["<C-Space>"] = cmp.mapping.complete(),
-    ["<CR>"]      = cmp.mapping.confirm({ select = true }),
-    ["<Tab>"]     = cmp.mapping(function(fallback)
-      if cmp.visible() then cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
-      else fallback() end
-    end, { "i", "s" }),
-    ["<S-Tab>"]   = cmp.mapping(function(fallback)
-      if cmp.visible() then cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then luasnip.jump(-1)
-      else fallback() end
-    end, { "i", "s" }),
-  }),
-  sources = cmp.config.sources({
-    { name = "nvim_lsp" },
-    { name = "luasnip" },
-  }, {
-    { name = "buffer" },
-  }),
-})
+if ok_cmp and ok_snip then
+  cmp.setup({
+    snippet = {
+      expand = function(args) luasnip.lsp_expand(args.body) end,
+    },
+    mapping = cmp.mapping.preset.insert({
+      ["<C-Space>"] = cmp.mapping.complete(),
+      ["<CR>"]      = cmp.mapping.confirm({ select = true }),
+      ["<Tab>"]     = cmp.mapping(function(fallback)
+        if cmp.visible() then cmp.select_next_item()
+        elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
+        else fallback() end
+      end, { "i", "s" }),
+      ["<S-Tab>"]   = cmp.mapping(function(fallback)
+        if cmp.visible() then cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then luasnip.jump(-1)
+        else fallback() end
+      end, { "i", "s" }),
+    }),
+    sources = cmp.config.sources({
+      { name = "nvim_lsp" },
+      { name = "luasnip" },
+    }, {
+      { name = "buffer" },
+    }),
+  })
+end

@@ -30,7 +30,7 @@ sudo apt-get install -y build-essential cmake python3-dev
 
 ## Neovim
 
-lazy.nvim and all plugins install automatically on first launch. Requires pyright for Python LSP:
+lazy.nvim and all plugins install automatically on first launch. A second launch is needed for LSP and completion to become active. Requires pyright for Python LSP:
 
 ```bash
 pip install pyright
@@ -38,7 +38,25 @@ pip install pyright
 
 ## hstr
 
+hstr is installed by `setup.sh`. To install manually:
+
 ```bash
 sudo add-apt-repository ppa:ultradvorka/ppa
 sudo apt-get update && sudo apt-get install -y hstr
+```
+
+## nvm / pyenv / Rust
+
+These are installed by `setup.sh`. The `.bashrc` integrations are guarded and silently skipped if the tools are not present.
+
+## nvm
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/HEAD/install.sh | bash
+```
+
+Then restart your shell and install a Node version:
+
+```bash
+nvm install --lts
 ```

@@ -1,10 +1,4 @@
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
-
-# --- Environment ---
+# --- Environment (applies to all shells) ---
 export EDITOR='nvim'
 export VISUAL='nvim'
 export VPN_CONNECT_TIMEOUT=8
@@ -14,6 +8,12 @@ export LD_LIBRARY_PATH=/usr/local/lib
 
 # Secrets kept out of version control
 [ -f ~/.bashrc.secrets ] && . ~/.bashrc.secrets
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
 # --- History (hstr) ---
 shopt -s histappend
@@ -113,8 +113,8 @@ fi
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases
 
 # --- Tool integrations ---
-eval "$(direnv hook bash)"
-. "$HOME/.cargo/env"
+command -v direnv &>/dev/null && eval "$(direnv hook bash)"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
@@ -122,4 +122,4 @@ export NVM_DIR="$HOME/.nvm"
 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+command -v pyenv &>/dev/null && eval "$(pyenv init -)"

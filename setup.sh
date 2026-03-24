@@ -28,10 +28,13 @@ pip install pyright ruff requests
 # --- vim: install plugins and build YouCompleteMe ---
 # vim-plug bootstraps itself on first launch via .vimrc
 vim -c "PlugInstall --sync" -c "qa!"
-~/.vim/plugged/YouCompleteMe/install.py
+python3 ~/.vim/plugged/YouCompleteMe/install.py
+
+# --- nvm ---
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/HEAD/install.sh | bash
 
 # --- pyenv ---
 curl https://pyenv.run | bash
 
 # --- Rust ---
-curl https://sh.rustup.rs -sSf | sh
+curl https://sh.rustup.rs -sSf | sh -s -- -y
