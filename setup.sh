@@ -1,31 +1,37 @@
 #!/usr/bin/bash
+set -e
 
+# --- Symlinks ---
+rm -f ~/.vimrc
 ln -s ~/git/rcs/.vimrc ~/.vimrc
-rm ~/.bashrc
+rm -f ~/.bashrc
 ln -s ~/git/rcs/.bashrc ~/.bashrc
+mkdir -p ~/.config/nvim
+rm -f ~/.config/nvim/init.lua
+ln -s ~/git/rcs/nvim/init.lua ~/.config/nvim/init.lua
 
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim -c "PluginInstall" -c "qa!"
-
+# --- System packages ---
 sudo add-apt-repository -y ppa:ultradvorka/ppa
-sudo add-apt-repository ppa:jonathonf/vim
 sudo apt-get update
-sudo aptitude install -y hstr
-sudo aptitude install -y vim-gtk3
-sudo aptitude install -y curl
+sudo apt-get install -y \
+    hstr \
+    vim-gtk3 \
+    neovim \
+    curl \
+    build-essential cmake python3-dev python3-pip \
+    mono-complete golang nodejs default-jdk npm \
+    direnv
 
-sudo aptitude install -y build-essential cmake python3-dev
-sudo aptitude install -y mono-complete golang nodejs default-jdk npm
+# --- Python tools ---
+pip install pyright ruff requests
 
+# --- vim: install plugins and build YouCompleteMe ---
+# vim-plug bootstraps itself on first launch via .vimrc
+vim -c "PlugInstall --sync" -c "qa!"
+~/.vim/plugged/YouCompleteMe/install.py
+
+# --- pyenv ---
 curl https://pyenv.run | bash
+
+# --- Rust ---
 curl https://sh.rustup.rs -sSf | sh
-
-sudo aptitude install -y direnv
-
-cd ~/.vim/bundle/YouCompleteMe
-python3 install.py --all
-cd ~/git/rcs
-
-pip install requests
-mkdir -p $HOME/.config/terminator/plugins
-wget https://git.io/v5Zww -O $HOME"/.config/terminator/plugins/terminator-themes.py"
