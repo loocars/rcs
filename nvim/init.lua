@@ -1,6 +1,6 @@
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.uv.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     "git", "clone", "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
@@ -14,7 +14,6 @@ require("lazy").setup({
   "dense-analysis/ale",
   "pacha/vem-tabline",
   "vim-airline/vim-airline",
-  "gmoe/vim-espresso",
   "vim-python/python-syntax",
 
   -- LSP
@@ -31,12 +30,12 @@ require("lazy").setup({
 ------------------------------------------------------------
 -- General settings
 ------------------------------------------------------------
-vim.opt.fileformat   = "unix"
-vim.opt.fileformats  = { "unix", "dos" }
+vim.o.fileformat     = "unix"
+vim.o.fileformats    = "unix,dos"
 vim.opt.clipboard    = "unnamedplus"
 
-vim.opt.background   = "dark"
--- vim.cmd("colorscheme espresso")
+vim.opt.termguicolors = false
+vim.opt.background    = "dark"
 
 vim.opt.hidden       = true
 vim.opt.wildmenu     = true
@@ -126,29 +125,29 @@ vim.g["airline#extensions#tabline#enabled"] = 1
 ------------------------------------------------------------
 -- LSP
 ------------------------------------------------------------
-local ok_lsp, lspconfig = pcall(require, "lspconfig")
 local ok_cmp_lsp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 
-if ok_lsp then
-  local capabilities = ok_cmp_lsp and cmp_nvim_lsp.default_capabilities() or {}
+-- Set capabilities globally for all servers
+vim.lsp.config("*", {
+  capabilities = ok_cmp_lsp and cmp_nvim_lsp.default_capabilities() or {},
+})
 
-  -- Python: pyright for completions, go-to-def, hover
-  -- Install with: pip install pyright
-  lspconfig.pyright.setup({ capabilities = capabilities })
+-- Python: pyright for completions, go-to-def, hover
+-- Install with: pip install pyright
+vim.lsp.enable("pyright")
 
-  -- Keymaps active only when an LSP is attached to the buffer
-  vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(ev)
-      local opts = { buffer = ev.buf, silent = true }
-      vim.keymap.set("n", "gd",         vim.lsp.buf.definition,     opts)
-      vim.keymap.set("n", "K",          vim.lsp.buf.hover,          opts)
-      vim.keymap.set("n", "gi",         vim.lsp.buf.implementation, opts)
-      vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename,         opts)
-      vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action,    opts)
-      vim.keymap.set("n", "gr",         vim.lsp.buf.references,     opts)
-    end,
-  })
-end
+-- Keymaps active only when an LSP is attached to the buffer
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(ev)
+    local opts = { buffer = ev.buf, silent = true }
+    vim.keymap.set("n", "gd",         vim.lsp.buf.definition,     opts)
+    vim.keymap.set("n", "K",          vim.lsp.buf.hover,          opts)
+    vim.keymap.set("n", "gi",         vim.lsp.buf.implementation, opts)
+    vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename,         opts)
+    vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action,    opts)
+    vim.keymap.set("n", "gr",         vim.lsp.buf.references,     opts)
+  end,
+})
 
 ------------------------------------------------------------
 -- Completion (nvim-cmp)

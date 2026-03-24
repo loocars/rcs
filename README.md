@@ -36,6 +36,20 @@ lazy.nvim and all plugins install automatically on first launch. A second launch
 pip install pyright
 ```
 
+Neovim is managed by [bob](https://github.com/MordechaiHadad/bob). To install or update manually:
+
+```bash
+cargo install bob-nvim
+bob install stable
+bob use stable
+```
+
+To update to the latest stable release later:
+
+```bash
+bob update stable
+```
+
 ## hstr
 
 hstr is installed by `setup.sh`. To install manually:

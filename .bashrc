@@ -90,6 +90,7 @@ alias first50files='git status | grep geändert | cut -d":" -f2 | cut -d" " -f8 
 export PATH=$PATH:~/git/zeug_cmk/bin/
 export PATH=$PATH:~/.local/bin/
 export PATH=$PATH:~/.cargo/bin/
+export PATH=$PATH:~/.local/share/bob/nvim-bin/
 export PATH=$PATH:~/.codon/bin/
 
 # --- hstr ---
