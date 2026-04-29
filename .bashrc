@@ -79,12 +79,13 @@ alias checkm='cd ~/git/check_mk/checkman'
 alias tests='cd ~/git/check_mk/tests'
 alias zeug='cd ~/git/zeug_cmk'
 alias gcm='cd ~/git/check_mk/ && git checkout master && git pull'
-alias gcb='cd ~/git/check_mk_2.5.0 && git checkout 2.5.0 && git pull'
-alias gcs='cd ~/git/check_mk_2.4.0 && git checkout 2.4.0 && git pull'
-alias gco='cd ~/git/check_mk_2.3.0 && git checkout 2.3.0 && git pull'
-alias gca='cd ~/git/check_mk_2.2.0 && git checkout 2.2.0 && git pull'
+alias gcb='cd ~/git/check_mk_2.6.0 && git checkout 2.6.0 && git pull'
+alias gcs='cd ~/git/check_mk_2.5.0 && git checkout 2.5.0 && git pull'
+alias gco='cd ~/git/check_mk_2.4.0 && git checkout 2.4.0 && git pull'
+alias gca='cd ~/git/check_mk_2.3.0 && git checkout 2.3.0 && git pull'
 alias unittests='make -C tests/ test-unit'
 alias first50files='git status | grep geändert | cut -d":" -f2 | cut -d" " -f8 | head -n50 | tr "\n" " "'
+alias cdd='bazel run //packages/cmk-dev-deploy:cmk-dev-deploy-bin --'
 
 # --- PATH ---
 export PATH=$PATH:~/git/zeug_cmk/bin/
